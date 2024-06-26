@@ -13,8 +13,8 @@ const port: number = parseInt(process.env.PORT as string, 10) || 8080;
 
 //middleware
 app.use(express.json());
-app.use(cors({ origin: '*' }));
-app.use(morgan("dev"));
+app.use(cors({ origin: '*' })); // allow domain permission
+app.use(morgan("dev")); // print message api
 
 //route 
 app.use('/api', routes);
