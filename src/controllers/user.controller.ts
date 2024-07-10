@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { BaseResponse, ZUser } from "../models";
-import { changeUser, findUser, insertUser, removeUser, userList } from "../services";
+import { changeUser, checkLogin, findUser, insertUser, removeUser, userList } from "../services";
 import { User } from "@prisma/client";
 import { z } from "zod";
 import { ValidationError, fromZodError } from "zod-validation-error";
@@ -69,6 +69,18 @@ export const deleteUser = async (req: Request, res: Response<BaseResponse<User>>
             message: 'Successful',
             success: true,
             data: await removeUser(Number( req.params.userId))
+        })
+    } catch (error) {
+        next(error) // การโยน error
+    }
+}
+
+export const login = async (req: Request, res: Response<BaseResponse>, next: NextFunction) => {
+    try{
+        res.status(200).json({
+            message: 'Successful',
+            success: true,
+            data: await checkLogin(req.body.username, req.body.password)
         })
     } catch (error) {
         next(error) // การโยน error

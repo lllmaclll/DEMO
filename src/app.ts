@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import routes from './routes'
 import prisma from "./configs/prisma.config";
 import { globalErrorHandler } from "./middlewares";
+import { initRedis } from "./configs/redis.config";
 
 const app: Application = express();
 
@@ -20,6 +21,7 @@ app.use(morgan("dev")); // print message api
 app.use('/api', routes);
 app.use(globalErrorHandler) // ไว้ล่างสุด จะทำจังหวะสุดท้าย
 
-app.listen(port, () => {
+app.listen(port, async () => {
+  await initRedis()
   console.log(`Start server in port ${port}`);
 });

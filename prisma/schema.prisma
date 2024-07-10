@@ -9,7 +9,7 @@ datasource db {
 
 model User {
   id       Int      @id @default(autoincrement()) @db.Int
-  username String   @db.VarChar(100)
+  username String   @unique @db.VarChar(100)
   password String   @db.VarChar(100)
   age      Int      @db.Int
   createAt DateTime @default(now())
